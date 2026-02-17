@@ -1,0 +1,27 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <input type="email" formControlName="email" placeholder="Email" />
+
+  @if (getErrorMessage('email')) {
+    <small>{{ getErrorMessage('email') }}</small>
+  }
+
+  <input type="password" formControlName="password" placeholder="Password" />
+
+  @if (getErrorMessage('password')) {
+    <small>{{ getErrorMessage('password') }}</small>
+  }
+
+  <button type="submit" [disabled]="loginForm.invalid || isLoading">
+    @if (isLoading) {
+      Entrando...
+    } @else {
+      Entrar
+    }
+  </button>
+
+  @if (loginError) {
+    <div class="error">
+      {{ loginError }}
+    </div>
+  }
+</form>
