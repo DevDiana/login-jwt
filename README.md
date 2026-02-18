@@ -10,7 +10,6 @@ Aplicação Angular com **autenticação JWT**, acessibilidade seguindo padrões
 
 Este projeto foi gerado usando o [Angular CLI](https://github.com/angular/angular-cli) versão 21.0.5.
 
-
 ## 🚀 Recursos implementados
 
 - **Autenticação com JWT** (JSON Web Token)
