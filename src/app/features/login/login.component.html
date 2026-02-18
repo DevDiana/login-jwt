@@ -1,27 +1,77 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <input type="email" formControlName="email" placeholder="Email" />
+<div class="login-wrapper">
+  <mat-card class="login-card shadow-lg" role="main">
+    <div class="login-header-accent"></div>
 
-  @if (getErrorMessage('email')) {
-    <small>{{ getErrorMessage('email') }}</small>
-  }
+    <mat-card-header>
+      <mat-card-title id="login-title">Bem-vindo de volta</mat-card-title>
+      <mat-card-subtitle>Faça login para acessar o sistema</mat-card-subtitle>
+    </mat-card-header>
 
-  <input type="password" formControlName="password" placeholder="Password" />
+    <mat-card-content>
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        class="login-form"
+        aria-labelledby="login-title"
+      >
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="Digite seu e-mail"
+            aria-required="true"
+            [attr.aria-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            aria-describedby="email-error-text"
+          />
+          <mat-icon matSuffix aria-hidden="true">email</mat-icon>
 
-  @if (getErrorMessage('password')) {
-    <small>{{ getErrorMessage('password') }}</small>
-  }
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <mat-error id="email-error-text">E-mail inválido ou obrigatório</mat-error>
+          }
+        </mat-form-field>
 
-  <button type="submit" [disabled]="loginForm.invalid || isLoading">
-    @if (isLoading) {
-      Entrando...
-    } @else {
-      Entrar
-    }
-  </button>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="password"
+            aria-required="true"
+            [attr.aria-invalid]="
+              loginForm.get('password')?.invalid && loginForm.get('password')?.touched
+            "
+            aria-describedby="password-error-text"
+          />
+          <mat-icon matSuffix aria-hidden="true">lock</mat-icon>
 
-  @if (loginError) {
-    <div class="error">
-      {{ loginError }}
-    </div>
-  }
-</form>
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <mat-error id="password-error-text">A senha é obrigatória</mat-error>
+          }
+        </mat-form-field>
+
+        @if (loginError) {
+          <div class="login-error-box" role="alert" aria-live="assertive">
+            <mat-icon aria-hidden="true">error_outline</mat-icon>
+            <span>{{ loginError }}</span>
+          </div>
+        }
+
+        <button
+          mat-flat-button
+          class="login-button"
+          type="submit"
+          [disabled]="loginForm.invalid || isLoading"
+          [attr.aria-busy]="isLoading"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="24" aria-label="Autenticando, por favor aguarde"></mat-spinner>
+          } @else {
+            ENTRAR NO SISTEMA
+          }
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

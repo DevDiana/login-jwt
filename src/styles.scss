@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$magenta-palette,
+        tertiary: mat.$violet-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  margin: 0;
+  height: 100%;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 10px;
+  background: #1a1a2e;
+  color: #ffffff;
+  padding: 12px 24px;
+  z-index: 9999;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #e91e63;
+  border-radius: 4px;
+  transition: top 0.3s ease-in-out;
+
+  &:focus {
+    top: 10px;
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+}
+
+#main-content:focus {
+  outline: none;
+}

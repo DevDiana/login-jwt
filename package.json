@@ -1,12 +1,16 @@
 {
   "name": "login-jwt",
   "version": "0.0.0",
+  "private": true,
+  "packageManager": "npm@10.9.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:coverage": "ng test --code-coverage --no-watch --browsers=Chrome",
+    "test:open-report": "npm run test:coverage && (open ./coverage/index.html || start ./coverage/index.html)"
   },
   "prettier": {
     "printWidth": 100,
@@ -20,13 +24,13 @@
       }
     ]
   },
-  "private": true,
-  "packageManager": "npm@10.9.0",
   "dependencies": {
+    "@angular/cdk": "~21.1.4",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
     "@angular/core": "^21.0.0",
     "@angular/forms": "^21.0.0",
+    "@angular/material": "~21.1.4",
     "@angular/platform-browser": "^21.0.0",
     "@angular/router": "^21.0.0",
     "rxjs": "~7.8.0",
@@ -37,6 +41,7 @@
     "@angular/build": "^21.0.5",
     "@angular/cli": "^21.0.5",
     "@angular/compiler-cli": "^21.0.0",
+    "@angular/material": "^21.1.4",
     "@angular/platform-browser-dynamic": "^21.1.4",
     "@types/jasmine": "^6.0.0",
     "jasmine-core": "^6.0.1",
@@ -48,9 +53,5 @@
     "karma-jasmine-html-reporter": "^2.2.0",
     "typescript": "~5.9.2",
     "zone.js": "^0.16.0"
-  },
-  "scripts": {
-    "test:coverage": "ng test --code-coverage --no-watch --browsers=Chrome",
-    "test:open-report": "npm run test:coverage && open ./coverage/index.html || start ./coverage/index.html"
   }
 }

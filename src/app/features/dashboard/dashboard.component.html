@@ -1,3 +1,63 @@
-<h2>Dashboard protegido</h2>
+<div class="dashboard-page">
+  <aside class="sidebar" role="navigation" aria-label="Menu Principal">
+    <div class="sidebar-logo">
+      <mat-icon aria-hidden="true">shield</mat-icon>
+      <span>Enterprise</span>
+    </div>
 
-<button (click)="logout()">Sair</button>
+    <nav class="sidebar-nav">
+      <a
+        class="nav-item active"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        aria-current="page"
+      >
+        <mat-icon aria-hidden="true">dashboard</mat-icon> Overview
+      </a>
+      <a class="nav-item" routerLink="/profile" routerLinkActive="active">
+        <mat-icon aria-hidden="true">person</mat-icon> Perfil
+      </a>
+      <a class="nav-item" routerLink="/settings" routerLinkActive="active">
+        <mat-icon aria-hidden="true">settings</mat-icon>
+        <span>Configurações</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button mat-button (click)="logout()" class="logout-btn" aria-label="Sair do sistema">
+        <mat-icon aria-hidden="true">logout</mat-icon> Sair
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content" id="main-content" tabindex="-1">
+    <header class="top-header">
+      <h2 id="page-title">Visão Geral</h2>
+      <div class="user-meta" [attr.aria-label]="'Usuário logado: ' + userEmail">
+        <span class="user-email">{{ userEmail }}</span>
+        <div class="avatar" aria-hidden="true">AD</div>
+      </div>
+    </header>
+
+    <section class="dashboard-body" aria-labelledby="page-title">
+      <div class="status-banner" role="status">
+        <mat-icon aria-hidden="true">verified_user</mat-icon>
+        <div>
+          <h3>Sessão Autenticada</h3>
+          <p>Seu acesso é protegido por criptografia de ponta a ponta via JWT.</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" tabindex="0">
+          <span class="label">Status do Token</span>
+          <span class="value">Ativo</span>
+        </div>
+        <div class="stat-card" tabindex="0">
+          <span class="label">Último Acesso</span>
+          <span class="value">Agora mesmo</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

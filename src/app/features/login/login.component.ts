@@ -1,98 +1,66 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { AuthService } from '../../services/auth/auth.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   isLoading = false;
-
   loginError: string | null = null;
 
   loginForm = this.formBuilder.group({
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
   });
 
-  private errorMessages: Record<string, Record<string, string>> = {
-    // passar para uma pasta no shared
-    email: {
-      required: 'O campo email é obrigatório.',
-      email: 'O email deve ser válido.',
-    },
-    password: {
-      required: 'O campo senha é obrigatório.',
-      minlength: 'A senha deve conter no mínimo 6 caracteres.',
-      maxlength: 'A senha deve conter no máximo 12 caracteres.',
-    },
-  };
-
-  getErrorMessage(controlName: 'email' | 'password'): string | null {
-    const control = this.loginForm.get(controlName);
-
-    if (!control || !control.touched || !control.errors) {
-      return null;
-    }
-
-    const firstErrorKey = Object.keys(control.errors)[0];
-
-    return this.errorMessages[controlName][firstErrorKey] ?? null;
-  }
-
-  private isFormValid(): boolean {
+  onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      return false;
+      return;
     }
-    return true;
-  }
 
-  private prepareForSubmit(): void {
     this.isLoading = true;
     this.loginError = null;
-  }
 
-  private getFormValue() {
-    return this.loginForm.value;
-  }
+    const { email, password } = this.loginForm.value;
 
-  private executeLogin(email: string, password: string): void {
-    this.authService.login(email, password).subscribe({
-      next: () => this.handleSuccess(),
-      error: (error) => this.handleError(error),
-      complete: () => this.finishSubmit(),
-    });
-  }
-
-  private handleError(error: any): void {
-    this.loginError = error.message;
-  }
-
-  private finishSubmit(): void {
-    this.isLoading = false;
-  }
-
-  private handleSuccess(): void {
-    this.router.navigate(['/dashboard']);
-  }
-
-  onSubmit(): void {
-    if (!this.isFormValid()) return;
-
-    this.prepareForSubmit();
-
-    const { email, password } = this.getFormValue();
-
-    this.executeLogin(email!, password!);
+    this.authService
+      .login(email!, password!)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.isLoading = false)),
+      )
+      .subscribe({
+        next: () => this.router.navigate(['/dashboard']),
+        error: (err) => (this.loginError = err.message),
+      });
   }
 }
