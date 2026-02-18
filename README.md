@@ -1,59 +1,71 @@
-# LoginJwt
+# Formulário de login 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
+<img width="834" height="503" alt="image" src="https://github.com/user-attachments/assets/21afe5e4-7682-44f8-9fd3-07f399fa0175" />
 
-## Development server
 
-To start a local development server, run:
+
+Aplicação Angular com **autenticação JWT**, acessibilidade seguindo padrões **WCAG** e cobertura de **testes unitários**.
+ 
+**Acesse o projeto:** [https://login-jwt-alpha.vercel.app/](https://login-jwt-alpha.vercel.app/)
+
+Este projeto foi gerado usando o [Angular CLI](https://github.com/angular/angular-cli) versão 21.0.5.
+
+
+## 🚀 Recursos implementados
+
+- **Autenticação com JWT** (JSON Web Token)
+- **Rotas protegidas** via `authGuard`
+- **Componentes standalone** (Angular 21)
+- **Testes unitários** com **Jasmine/Karma**
+- **Cobertura de testes** configurada com regras mínimas:
+  - Statements: 80%
+  - Branches: 70%
+  - Functions: 80%
+  - Lines: 80%
+- **Acessibilidade** seguindo padrões **WCAG**, incluindo:
+  - Uso correto de roles e labels (ARIA)
+  - Contraste de cores adequado
+  - Navegação por teclado (tabindex e gerenciamento de foco)
+  - Feedback visual de foco (`focus-visible`)
+
+## 📋 Pré-requisitos
+
+- [Node.js](https://nodejs.org/) versão >= 22
+- [Angular CLI](https://angular.dev/cli) versão 21
+- NPM ou Yarn
+
+## 🛠️ Instalação
+
+Clone o projeto e instale as dependências:
+
+```bash
+git clone https://github.com/DevDiana/login-jwt.git
+cd login-jwt
+npm install
+```
+
+## 💻 Rodando a aplicação
+
+Para iniciar o servidor de desenvolvimento:
 
 ```bash
 ng serve
 ```
+Abra o navegador em http://localhost:4200/. A aplicação recarrega automaticamente sempre que você altera algum arquivo fonte.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📦 Build da aplicação
+Para gerar a build de produção:
 
 ```bash
-ng generate component component-name
+ng build --configuration production
 ```
+Os arquivos compilados serão salvos na pasta dist/.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🧪 Testes unitários
+Para executar os testes unitários com Jasmine/Karma:
 
 ```bash
 ng test
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+A cobertura de testes será exibida no console e também gerada na pasta ./coverage.
